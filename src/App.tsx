@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ApiDocs from "./pages/ApiDocs";
@@ -25,8 +26,12 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/api-docs" element={<ApiDocs />} />
           
-          {/* Admin Routes */}
-          <Route path="/admin" element={<AdminLayout />}>
+          {/* Admin Routes - Wrapped in SidebarProvider */}
+          <Route path="/admin" element={
+            <SidebarProvider>
+              <AdminLayout />
+            </SidebarProvider>
+          }>
             <Route index element={<Dashboard />} />
             <Route path="packages" element={<PackagesList />} />
             <Route path="packages/new" element={<PackageForm />} />
