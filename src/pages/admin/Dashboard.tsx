@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Package as PackageIcon, FileText, Users, Globe } from 'lucide-react';
-import { packages } from '@/models/Package';
+import { packages} from '@/models/Package';
 import { websiteContent } from '@/models/WebsiteContent';
 
 export default function Dashboard() {

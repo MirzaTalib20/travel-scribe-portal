@@ -1,9 +1,11 @@
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import packageRoutes from './routes/packageRoutes.js';
 
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const packageRoutes = require('./routes/packageRoutes');
+// Load environment variables
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,20 +14,20 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB Atlas
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('Connected to MongoDB Atlas'))
-  .catch((error) => console.error('MongoDB connection error:', error));
-
-// Routes
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('✅ Connected to MongoDB Atlas'))
+.catch(err => console.error('❌ Failed to connect MongoDB:', err));
 app.use('/api/packages', packageRoutes);
-
-// Basic route
+// Test Route
 app.get('/', (req, res) => {
-  res.send('Travel API is running');
+  console.log(res);
+  res.send('Server is running and MongoDB is connected!');
 });
-
-// Start server
+// Start Server
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Backend server is running on http://localhost:${PORT}`);
 });

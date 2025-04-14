@@ -3,9 +3,9 @@ import { Package } from '../models/Package';
 import { WebsiteContent, websiteContent } from '../models/WebsiteContent';
 
 // Base API URL - replace with your actual API URL in production
-const API_URL = process.env.NODE_ENV === 'production' 
-  ? '/api' 
-  : 'http://localhost:5000/api';
+export const API_URL = import.meta.env.DEV
+  ? 'http://localhost:5000/api'
+  : '/api';
 
 // Package API - now connects to MongoDB backend
 export const fetchPackages = async (): Promise<Package[]> => {
@@ -23,6 +23,7 @@ export const fetchPackages = async (): Promise<Package[]> => {
 
 export const fetchPackageById = async (id: string): Promise<Package | undefined> => {
   try {
+    console.log('one')
     const response = await fetch(`${API_URL}/packages/${id}`);
     if (!response.ok) {
       throw new Error('Failed to fetch package');

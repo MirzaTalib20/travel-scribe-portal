@@ -1,18 +1,18 @@
 
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const ItineraryDaySchema = new mongoose.Schema({
   day: {
     type: Number,
-    required: true
+    required: false
   },
   title: {
     type: String,
-    required: true
+    required: false
   },
   description: {
     type: String,
-    required: true
+    required: false
   },
   activities: [String]
 });
@@ -20,15 +20,19 @@ const ItineraryDaySchema = new mongoose.Schema({
 const FAQSchema = new mongoose.Schema({
   question: {
     type: String,
-    required: true
+    required: false
   },
   answer: {
     type: String,
-    required: true
+    required: false
   }
 });
 
 const PackageSchema = new mongoose.Schema({
+  id: {
+    type: String,
+    required: true
+  },
   title: {
     type: String,
     required: true
@@ -53,6 +57,18 @@ const PackageSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  people: {
+    type: Number,
+    required: false
+  },
+  rating: {
+    type: String,
+    required: false
+  },
+  reviews:  {
+    type: String,
+    required: false
+  },
   itinerary: [ItineraryDaySchema],
   inclusions: [String],
   exclusions: [String],
@@ -65,4 +81,5 @@ const PackageSchema = new mongoose.Schema({
   timestamps: true // Adds createdAt and updatedAt fields automatically
 });
 
-module.exports = mongoose.model('Package', PackageSchema);
+const Package = mongoose.model('Package', PackageSchema);
+export default Package;

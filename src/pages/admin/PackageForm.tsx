@@ -11,9 +11,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { toast } from '@/components/ui/use-toast';
 import { ChevronLeft, Save, Plus, Trash2, Loader2 } from 'lucide-react';
-
 export default function PackageForm() {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
+  console.log("Editing package ID:", id);
   const isEditing = Boolean(id);
   const navigate = useNavigate();
   
@@ -38,7 +38,10 @@ export default function PackageForm() {
     if (isEditing) {
       const loadPackage = async () => {
         try {
-          const data = await fetchPackageById(id!);
+          console.log(id);
+          console.log('test');
+
+          const data = await fetchPackageById(id);
           if (data) {
             setPackageData(data);
           } else {

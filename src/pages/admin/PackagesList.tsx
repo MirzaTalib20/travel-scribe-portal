@@ -35,6 +35,7 @@ export default function PackagesList() {
     const loadPackages = async () => {
       try {
         const data = await fetchPackages();
+        console.log(data);
         setPackages(data);
         setFilteredPackages(data);
       } catch (error) {
@@ -65,7 +66,8 @@ export default function PackagesList() {
     if (confirm('Are you sure you want to delete this package?')) {
       try {
         await deletePackage(id);
-        setPackages(packages.filter(pkg => pkg.id !== id));
+        setPackages(packages.filter(pkg => pkg._id
+          !== id));
         toast({
           title: 'Success',
           description: 'Package deleted successfully',
@@ -131,9 +133,11 @@ export default function PackagesList() {
                 </TableHeader>
                 <TableBody>
                   {filteredPackages.map((pkg) => (
-                    <TableRow key={pkg.id}>
+                    <TableRow key={pkg._id
+                    }>
                       <TableCell className="font-medium">{pkg.title}</TableCell>
-                      <TableCell>{pkg.location}</TableCell>
+                      <TableCell>{pkg.location
+                      }</TableCell>
                       <TableCell>${pkg.price}</TableCell>
                       <TableCell>{pkg.duration}</TableCell>
                       <TableCell>
@@ -151,14 +155,17 @@ export default function PackagesList() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => navigate(`/admin/packages/edit/${pkg.id}`)}
+                          onClick={() => {
+                            navigate(`/admin/packages/edit/${pkg._id}`);
+                          }}
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => handleDelete(pkg.id)}
+                          onClick={() => handleDelete(pkg._id
+                          )}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>

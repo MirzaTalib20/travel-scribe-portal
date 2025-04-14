@@ -1,8 +1,8 @@
-
-const express = require('express');
-const Package = require('../models/Package');
-
+import express from 'express';
+import mongoose from 'mongoose';
+import Package from '../models/Package.js'; // 👈 make sure to use .js
 const router = express.Router();
+
 
 // GET all packages
 router.get('/', async (req, res) => {
@@ -14,23 +14,27 @@ router.get('/', async (req, res) => {
   }
 });
 
+
+
+
 // GET a specific package
 router.get('/:id', async (req, res) => {
   try {
-    const package = await Package.findById(req.params.id);
-    if (!package) {
+    const packages = await Package.findById(req.params.id);
+    if (!packages) {
       return res.status(404).json({ message: 'Package not found' });
     }
-    res.json(package);
+    res.json(packages);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
+
 // POST a new package
 router.post('/', async (req, res) => {
   const newPackage = new Package(req.body);
-  
+  console.log(newPackage);
   try {
     const savedPackage = await newPackage.save();
     res.status(201).json(savedPackage);
@@ -73,4 +77,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
